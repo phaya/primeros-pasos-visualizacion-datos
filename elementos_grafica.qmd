@@ -1,0 +1,65 @@
+# Elementos de una gráfica {#sec-elementos}
+
+UNA VISUALIZACIÓN de datos efectiva no se trata solo de mostrar información, sino de hacerlo de manera que el mensaje sea claro, conciso y fácil de interpretar. Uno de los principios fundamentales de un buen diseño gráfico es que se incluya **información que sea pertinente**.
+
+Repasemos para ello los elementos fundamentales qué componen una gráfica. Vamos a tomar un gráfico de barra como punto de partida (véase [Figura @fig-elementos-grafico]). El resto de gráficos mantienen la mayoría de los elementos que listamos a continuación:
+
+1\. **Título**. Describe el propósito o contenido de la gráfica. Da contexto sobre qué información se está mostrando. Se recomienda acompañar de un **subtítulo** que permite matizar y ampliar detalles sobre el contenido.
+
+2\. **Ejes**.
+
+-   Eje X (horizontal): Representa una categoría o variable independiente.
+
+-   Eje Y (vertical): Muestra la variable dependiente o los valores correspondientes cada categoría.
+
+3\. **Etiquetas de los ejes**. Explican qué representan los ejes X e Y, generalmente incluyendo la unidad de medida.
+
+4\. **Escala**. Marca los valores numéricos a lo largo de los ejes, ayudando a interpretar las magnitudes representadas.
+
+5\. **Rejilla**. Son las líneas que ayudan a seguir los valores numéricos a lo largo de los ejes, facilitando la lectura de la gráfica.
+
+6\. **Leyenda**. Indica qué significan los diferentes colores, líneas o símbolos utilizados en la gráfica.
+
+7\. **Créditos o notas**. Aportan información adicional que permite referenciar las fuentes de datos empleadas o añadir aclaraciones.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-elementos-grafico
+#| fig-cap: "Esquema que muestra los elementos básicos de una gráfica"
+library(ggplot2)
+
+# Crear un conjunto de datos de ejemplo
+datos <- data.frame(
+  Categorias = c("A", "B", "C", "D"),
+  Valores = c(23, 45, 12, 67),
+  Grupo = c("Grupo 1", "Grupo 2", "Grupo 1", "Grupo 2")
+)
+
+# Crear la gráfica de barras
+ggplot(datos, aes(x = reorder(Categorias, -Valores), y = Valores, fill = Grupo)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Título de la gráfica",
+    subtitle = "Subtítulo",
+    x = "Eje X",                      
+    y = "Eje Y (escala)",
+    fill = "Leyenda",
+    caption = "Créditos o notas"
+  ) +
+  theme_minimal() +                    
+  theme(
+    panel.grid.major = element_line(color = "grey", size = 0.8),
+    panel.grid.minor = element_line(color = "lightgrey", size = 0.4)
+  )
+```
+
+No todas las gráficas tienen que incluir todos los elementos listados. El resto de los capítulos se dedicarán a analizar cuando hay que utilizar estos elementos y cual es la mejor manera de hacerlo.
+
+-   El [capítulo @sec-tipo-grafica] introduce los dos tipos de gráfica mas comunes. En todos los casos se comparten los elementos básicos descritos en este capítulo.
+
+-   El [capítulo @sec-titulos] incluye recomendaciones para elegir un buen título y subtitulo.
+
+-   El [capítulo @sec-ejes] engloba las recomendaciones sobre los ejes que incluye cómo escoger la etiquetas, la escala, la numeración y la rejilla.
+
+-   El [capítulo @sec-menos-es-mas] resume las líneas maestras para eliminar elementos innecesarios y conseguir una gráfica lo menos saturada posible. En este capitulo trataremos el uso de la leyenda.
+
+-   El [capítulo @sec-colores] aborda cómo realizar un uso adecuado de los colores.

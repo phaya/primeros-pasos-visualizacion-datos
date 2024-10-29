@@ -1,0 +1,270 @@
+# Ejes {#sec-ejes}
+
+AL DISEÑAR los ejes de una gráfica es importante tener en cuenta una serie de consideraciones para asegurar que los datos sean presentados de manera clara, precisa y fácilmente comprensible,
+
+Primeramente, es importante que el **rango de los ejes** refleje adecuadamente los valores de los datos que se están representando. El uso de rangos excesivamente amplios o demasiado estrechos puede distorsionar la interpretación de los datos, lo que puede llevar a una percepción incorrecta de la información como se muestra en la [Figura @fig-ejes-rango].
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ejes-rango
+#| fig-cap: "El rango escogido en el gráfico de la izquierda es bastante mejorable. El rango del eje varía entre 0 y 50 cuando los valores de la gráfica no superan el 15. El gráfico de la derecha, en cambi, si que tiene el rango del eje bien ajustado."
+library(ggplot2)
+library(gridExtra)
+
+# Datos de ejemplo
+data <- data.frame(
+  categorias = c("A", "B", "C", "D"),
+  valores = c(10, 15, 7, 12)
+)
+
+# Gráfica con un límite de eje Y inadecuado (demasiado margen)
+grafica_inadecuada <- ggplot(data, aes(x = categorias, y = valores)) +
+geom_bar(stat = "identity", fill = "lightgray") +
+  ggtitle("Rango del eje Y mejorable") +
+  xlab("") +
+  ylab("") +
+  ylim(0, 50) + # Rango demasiado amplio
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfica con un rango ajustado al valor de los datos
+
+grafica_ajustada <- ggplot(data, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  ggtitle("Rango del eje Y ajustado") +
+  xlab("") +
+  ylab("") +
+  ylim(0, 15) + # Rango ajustado a los datos
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Colocar ambas gráficas una al lado de la otra
+grid.arrange(grafica_inadecuada, grafica_ajustada, ncol = 2)
+```
+
+Es muy recomendable que el rango de **los ejes en una gráfica de barras comiencen en cero** ya que las barras deben preservan una proporcionalidad visual entre la longitud y la cantidad que representan. Un principio elemental es que si tus números están representados por la longitud o altura de objetos ---barras, en este caso--- la longitud o altura debe ser proporcional a esos números [@cairo2019charts]. En caso contrario, puede exagerarse las diferencias entre las magnitudes representadas, de manera que una pequeña diferencia se puede interpretar mucho más grande, como es el caso de la [Figura @fig-ejes-comenzar-cero].
+
+Si fuera necesario que el eje no comenzará en el cero debe indicarse claramente en el gráfico. Otra opción es mostrar la diferencia respecto a un valor de referencia.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ejes-comenzar-cero
+#| fig-cap: "En la gráfica de la izquierda se acentúan las diferencias de manera artificial al empezar el eje en un valor distinto cero. En las gráfica de la derecha se puede observar claramente las diferencias entre cada uno de los valores."
+library(ggplot2)
+library(gridExtra)
+
+# Crear un conjunto de datos de ejemplo
+data <- data.frame(
+  category = c("A", "B", "C", "D"),
+  value = c(85, 90, 97, 92)
+)
+
+# Gráfico 1: Eje Y no comienza en 0
+plot1 <- ggplot(data, aes(x = category, y = value)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  coord_cartesian(ylim = c(80, 100)) +
+  labs(title="Eje Y NO comienza en 0",
+       x="", y="") +
+  theme_minimal()  +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfico 2: Eje Y comienza en 0
+plot2 <- ggplot(data, aes(x = category, y = value)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title="Eje Y comienza en 0",
+       x="", y="") +
+  theme_minimal()  +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Colocar los gráficos uno al lado del otro
+grid.arrange(plot1, plot2, ncol = 2)
+
+```
+
+Otro aspecto esencial es que las **etiquetas de los ejes** sean claras y precisas, representando correctamente las unidades de medida o las categorías correspondientes. Es importante incluir las unidades cuando sea necesario, como metros, euros o segundos, para asegurar que el lector entienda la magnitud de los datos presentados (véase [Figura @fig-ejes-unidades]. Si las unidades seleccionadas no son adecuadas, el lector puede confundirse o perder el contexto de los datos.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ejes-unidades
+#| fig-cap: "La gráfica de la izquierda no incluye las unidades de los valores, en cambio en la gráfica de la derecha queda claro que el eje X representa tiempo en segundos, mientras que el eje Y es la distancia recorrida en metros."
+library(ggplot2)
+library(gridExtra)
+
+# Generar datos de ejemplo
+datos <- data.frame(
+  x = c(1, 2, 3, 4, 5),
+  y = c(10, 15, 20, 25, 30)
+)
+
+# Gráfico sin etiquetas de eje claras (sin unidades)
+grafica_sin_unidades <- ggplot(datos, aes(x = x, y = y)) +
+  geom_line(color="lightgray", size=1.5) +
+  labs(title="Sin Unidades", subtitle="Distancia", x = "Tiempo", y = "") +
+  theme_minimal() +
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfico con etiquetas de eje claras (con unidades)
+grafica_con_unidades <- ggplot(datos, aes(x = x, y = y)) +
+  geom_line(color="#4F81BD", size=1.5) +
+  labs(title="Con Unidades Correctas",
+       subtitle = "Distancia (metros)",
+       x="Tiempo (segundos)", y="") +
+  theme_minimal() +
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+grid.arrange(grafica_sin_unidades, grafica_con_unidades, ncol = 2)
+```
+
+Al representar cantidades monetarias, es **preferible utilizar términos como "miles" o "millones"** en lugar de mostrar números largos y difíciles de interpretar. Así, en lugar de presentar 1.200.000 es más claro mostrarlo como 1,2 millones como se puede comprobar en la [Figura @fig-ejes-cantidades-monetarias]. Además, es importante mantener la consistencia en las unidades utilizadas a lo largo del gráfico. Si se están combinando diferentes sistemas de medida, como kilómetros y millas, es esencial aclararlo explícitamente para evitar malentendidos.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ejes-cantidades-monetarias
+#| fig-cap: "El eje Y de la gráfica de la izquierda representa las cantidades en notación científica, lo cual hace más difícil de comprender para el público general. En cambio, la gráfica de la derecha utiliza una notación más adecuada con el símbolo M para denotar cantidades millonarias."
+library(ggplot2)
+library(scales)  # Para usar las funciones de formateo como millones
+
+# Generar datos de ejemplo
+datos <- data.frame(
+  x = c(2023, 2024, 2025, 2026, 2027),
+  y = c(1200000, 1500000, 2000000, 5500000, 3000000)  # Cantidades en millones
+)
+
+# Gráfico sin ajustes (números largos y sin unidades claras)
+grafica_sin_millones <- ggplot(datos, aes(x = x, y = y)) +
+  geom_line(color="lightgray", size=1.5) +
+  labs(x = "", y = "") +
+  ggtitle("Unidades mejorables", 
+          subtitle = "Ingresos") + 
+  theme_minimal() +
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfico con unidades adecuadas (miles o millones)
+grafica_con_millones <- ggplot(datos, aes(x = x, y = y)) +
+  geom_line(color="#4F81BD", size=1.5) +
+  scale_y_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6)) +  # Formatear como millones
+  labs(x = "", y = "") +
+  ggtitle("Unidades adecuadas", 
+          subtitle = "Ingresos (millones de euros)") +
+  theme_minimal() +
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+grid.arrange(grafica_sin_millones, grafica_con_millones, ncol = 2)
+```
+
+El tamaño de la fuente debe ser lo suficientemente legible para garantizar una lectura cómoda de las etiquetas.
+
+La orientación de las etiquetas debe facilitar una lectura fluida que no requiera un esfuerzo excesivo. En aquellos casos donde las **etiquetas del eje X sean muy largas**, la primera alternativa será **orientar el gráfico en horizontal**. Sirva la [Figura @fig-ejes-orientacion-horizontal] a modo de ejemplo. A ser posible hay que evitar colocar las etiquetas oblicuas o en vertical.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ejes-orientacion-horizontal
+#| fig-cap: "Gráfica de barras orientada horizontalmente para mejorar la legibilidad de las etiquetas del eje X."
+library(ggplot2)
+
+# Datos de ejemplo
+data <- data.frame(
+  Categoria = c("Categoría con un nombre muy largo 1", 
+                "Categoría con un nombre muy largo 2", 
+                "Categoría con un nombre muy largo 3", 
+                "Categoría con un nombre muy largo 4", 
+                "Categoría con un nombre muy largo 5"),
+  Valor = c(5, 10, 15, 20, 25)
+)
+
+# Crear gráfica de barras horizontal
+ggplot(data, aes(x = reorder(Categoria, Valor), y = Valor)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  coord_flip() +  # Esto rota la gráfica para que las barras sean horizontales
+  labs(x = "", y = "", title = "Gráfica de Barras Horizontal con Nombres Largos") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 10),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank())
+```
+
+Otra posibilidad es omitir ciertas etiquetas para dejar espacio entre las mismas. En lugar de sobrecargar el espacio con texto innecesario, se incluyen las etiquetas mínimas para poder interpretar el gráfico como se hace la [Figura @fig-ejes-etiquetas-menos].
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ejes-etiquetas-menos
+#| fig-cap: "Gráfica de barras orientada horizontalmente para mejorar la legibilidad de las etiquetas del eje X."
+library(ggplot2)
+library(scales)  # Paquete para formatear las fechas
+
+# Generar datos de ejemplo para tres años
+set.seed(123)  # Fijar la semilla para reproducibilidad
+fechas <- seq(as.Date("2021-01-01"), as.Date("2023-12-01"), by = "month")
+indice_bursatil <- cumsum(rnorm(length(fechas), mean = 1, sd = 3)) + 100  # Simulación del índice bursátil
+
+data <- data.frame(
+  Fecha = fechas,
+  Indice = indice_bursatil
+)
+
+# Crear el gráfico de líneas
+ggplot(data, aes(x = Fecha, y = Indice)) +
+  geom_line(color = "#4F81BD", size = 1.5) +  
+  scale_x_date(date_labels = "%b-%y", date_breaks = "6 months") +  # Formato Mes-Año (ej. ene-21), etiquetas cada 3 meses
+  labs(title = "Evolución del Índice Bursátil (2021-2023)", 
+       subtitle = "Índice Bursátil",
+       x = "", 
+       y = "") +
+  theme_minimal() +
+  theme(panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank())
+```
+
+Los **títulos de los ejes** deben incluirse sólo sin son necesarios. Es posible que el título del eje aporte información redundante o que se pueda suplir con el subtítulo. Por ejemplo, en una gráfica que involucra el paso del tiempo es muy probable que se pueda omitir el título del eje X, como ocurre en el ejemplo de la [Figura @fig-titulo-eje-Y]
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-titulo-eje-Y
+#| fig-cap: "Los títulos de los ejes de la figura de la izquierda aportan información redudante. Al eliminarnos se observa una gráfica menos recargada. El subtítulo de la grafica permite eliminar el título del eje Y. De esta manera, el título del eje se lee en horizontal en vez de en vertical."
+library(ggplot2)
+library(gridExtra)
+library(scales)  # Para formatear las fechas
+
+# Generar datos de ejemplo para tres años
+set.seed(123)  # Fijar la semilla para reproducibilidad
+fechas <- seq(as.Date("2021-01-01"), as.Date("2023-12-01"), by = "month")
+indice_bursatil <- cumsum(rnorm(length(fechas), mean = 1, sd = 3)) + 100  # Simulación del índice bursátil
+
+data <- data.frame(
+  Fecha = fechas,
+  Indice = indice_bursatil
+)
+
+# Crear la primera gráfica con el título en el eje X
+grafica_con_titulo <- ggplot(data, aes(x = Fecha, y = Indice)) +
+  geom_line(color = "lightgray", size = 1) +  # Línea azul
+  scale_x_date(date_labels = "%b-%y", date_breaks = "9 months") +  
+  labs(x = "Tiempo", y = "Índice Bursátil", title = "Mejorable") +
+  theme_minimal() +
+  theme(panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank())
+
+# Crear la segunda gráfica sin el título en el eje X
+grafica_sin_titulo <- ggplot(data, aes(x = Fecha, y = Indice)) +
+  geom_line(color = "#4F81BD", size = 1) +  # Línea azul
+  scale_x_date(date_labels = "%b-%y", date_breaks = "9 months") +  
+  labs(x = NULL, 
+       y = NULL, 
+       title = "Adecuado",
+       subtitle = "Índice Bursátil") +
+  theme_minimal() +
+  theme(panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank())
+
+# Mostrar ambas gráficas una al lado de la otra
+grid.arrange(grafica_con_titulo, grafica_sin_titulo, ncol = 2)
+
+```
+
+En caso de ser necesario incluir el título del eje es importante evitar que sea excesivamente largo o confuso.

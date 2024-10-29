@@ -1,0 +1,126 @@
+# Menos es más {#sec-menos-es-mas}
+
+> "Less is more." --- Miles van der Rohe
+
+CUANDO se trata de la visualización de datos, es fácil caer en la trampa de querer mostrar todo. La tentación de añadir detalles y adornos gráficos puede ser fuerte, pero esto suele terminar en gráficos sobrecargados y difíciles de interpretar. Como bien dijo Ludwig Mies van der Rohe, "menos es más". Este principio se aplica perfectamente al diseño de visualizaciones de datos: menos elementos innecesarios y más enfoque en la información ese
+
+Reducir la saturación de elementos gráficos no solo mejora la estética de las visualizaciones, sino que también ayuda a mejorar la legibilidad y la comprensión de los datos. Esto no significa eliminar detalles importantes, sino optimizar el diseño para que cada elemento aporte información a la gráfica.
+
+Al aplicar estas prácticas, facilitamos que la información clave sea lo primero que el espectador perciba, permitiendo una comprensión más rápida y eficaz. Aquí exploramos algunas estrategias clave para lograrlo.
+
+El primer consejo es **eliminar bordes innecesarios**. Los bordes alrededor de las gráficas a menudo son visualmente pesados y no aportan valor informativo tal como se ilustra en la [Figura @fig-bordes].
+
+En la mayoría de los casos, eliminarlos o suavizarlos es una excelente manera de simplificar la presentación. Esto permite que los datos ocupen el centro de atención, sin distraer al espectador con líneas que no tienen un propósito funcional claro. ¡Ojo porque tanto programas de análisis de datos como lenguajes de programación tienden a incluir por defecto estos bordes!.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-bordes
+#| fig-cap: "A la izquierda una gráfica con marco frente a gráfica sin marco a su derecha."
+library(ggplot2)
+library(gridExtra)
+
+# Crear el conjunto de datos
+data_bar <- data.frame(
+  categorias = c("A", "B", "C", "D"),
+  valores = c(10, 20, 15, 25)
+)
+
+# Gráfico con bordes
+plot_con_bordes <- ggplot(data_bar, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  labs(x="", y="", "Con bordes") +
+  theme_light() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+
+# Gráfico sin bordes
+plot_sin_bordes <- ggplot(data_bar, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(x="", y="", "Con bordes") +
+  theme_minimal() +
+  theme(panel.border = element_blank()) +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Mostrar ambos gráficos juntos
+grid.arrange(plot_con_bordes, plot_sin_bordes, ncol = 2)
+```
+
+De igual manera, **reducir, o incluso eliminar, las rejillas** puede mejorar la legibilidad de la gráfica. Las rejillas son útiles en algunos casos para guiar la interpretación, pero un exceso de líneas puede convertir el gráfico en un laberinto visual. Eliminar las rejillas o hacerlas más tenues es una buena forma de reducir la saturación. Si bien es importante que el espectador pueda comparar datos, la rejilla no debe robar protagonismo a la información. Observe en la \[Figura \@ fig-rejilla\] la diferencia entre la misma gráfica con y sin rejilla.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-rejilla
+#| fig-cap: "Misma gráfica con y sin rejilla"
+library(ggplot2)
+library(gridExtra)
+
+# Crear el conjunto de datos
+data_bar <- data.frame(
+  categorias = c("A", "B", "C", "D"),
+  valores = c(10, 20, 15, 25)
+)
+
+# Gráfico con rejillas
+plot_rejilla_saturada <- ggplot(data_bar, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  labs(x="", y="", title="Con rejilla") +
+  theme_minimal() 
+
+# Gráfico sin rejilla
+plot_rejilla_adecuada <- ggplot(data_bar, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(x="", y="", title="Sin rejilla") +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(), 
+    panel.grid.minor.x = element_blank(), 
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
+  ) 
+
+# Mostrar ambos gráficos juntos
+grid.arrange(plot_rejilla_saturada, plot_rejilla_adecuada, ncol = 2)
+```
+
+Es recomendable **elegir un fondo transparente**. Con un fondo transparente es más fácil integrar visualmente en un documento. En su defecto, un **fondo blanco** es más conveniente que otro color, como por ejemplo, el gris que escogen por defecto algunos paquetes estadísticos.
+
+Un error que suele cometer en los primeros gráficos que se realizan es incluir la **leyenda cuando es innecesaia**. Las leyendas son útiles cuando los gráficos incluyen múltiples categorías, pero a menudo se puede mejorar la comprensión si **la información está directamente integrada en el gráfico**.
+
+Un ejemplo claro lo encontramos en las series temporales, donde colocar etiquetas directamente en las líneas elimina la necesidad de buscar en una leyenda externa, lo que ahorra tiempo al espectador y mejora la claridad. Un buen ejemplo lo podemos ver en la [Figura @fig-leyenda-serie-temporal].
+
+::: {#fig-leyenda-serie-temporal}
+![](images/population-and-demography.png)
+
+Fuente: [Our World in Data](https://ourworldindata.org/population-growth)
+:::
+
+En el caso de necesitar incluir la leyenda es conveniente que está se pueda leer en horizontal de izquierda a derecha, colocándola arriba o abajo de la gráfica como en el caso de la [Figura @fig-mostrar-leyenda].
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-mostrar-leyenda
+#| fig-cap: "Gráfica con leyenda en la parte superior."
+library(ggplot2)
+library(scales)
+
+# Crear un conjunto de datos simulado
+data <- data.frame(
+  Categoria = rep(c("A", "B", "C", "D"), each = 3),
+  Grupo = rep(c("Grupo 1", "Grupo 2", "Grupo 3"), times = 4),
+  Valor = c(4, 6, 8, 5, 7, 3, 6, 9, 5, 7, 5, 6)
+)
+
+# Crear la gráfica de barras
+ggplot(data, aes(x = Categoria, y = Valor, fill = Grupo)) +
+  geom_bar(stat = "identity", position = "dodge") +  # "dodge" separa los grupos
+    scale_y_continuous(labels = scales::number_format(accuracy = 1))  +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(), 
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank()
+  ) +
+  theme(legend.position = "top") +  # Posición de la leyenda en la parte superior
+  labs(title = "Gráfica de Barras con Varios Grupos", x = "", y = "", fill = "") 
+```

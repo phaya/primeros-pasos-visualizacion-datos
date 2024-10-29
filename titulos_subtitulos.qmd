@@ -1,0 +1,33 @@
+# Titulos y subtítulos {#sec-titulos}
+
+> "Una imagen puede valer más que mil números de mil palabras, pero no siempre más que mil palabras." --- Alberto Cairo
+
+ALBERTO CAIRO defiende que las gráficas son argumentos visuales que están destinados a ser decodificados por el lector. Los gráficos hay que explicarlos ya que pueden ser mal interpretados sin el contexto adecuado, y algunos temas requieren explicaciones detalladas que un gráfico no puede proporcionar por sí solo [@cairo2017visualizacion].
+
+Escoger un buen **título** es un buen primer comienzo en este recorrido.  El título juega un rol crucial en la explicación de un gráfico, ya que proporciona el contexto inmediato y guía al lector sobre qué interpretar o esperar del gráfico. Sin un título claro, el gráfico puede ser confuso o ambiguo, dificultando su comprensión completa. El título enmarca la información visual y dirige la atención hacia el mensaje central. Es habitual incluir un **subtítulo** que complementa el título, ayudando a comprender el enfoque específico de los datos presentados en el gráfico.
+
+En el ejemplo que se muestra en la [Figura @fig-titulo-pew-research], el título "About 4 in 10 young adults in the U.S. now regularly get news on TikTok" comunica de inmediato la información clave: un gran porcentaje de jóvenes adultos en los EE. UU. utiliza TikTok para obtener noticias. Sirve como un punto de entrada para que el lector sepa de qué trata el gráfico antes de analizar los datos.
+
+::: {#fig-titulo-pew-research}
+![](images/clipboard-756528475.png)
+
+Fuente: [PewResearch](https://www.pewresearch.org/wp-content/uploads/sites/20/2024/09/SR_24.09.13_TikTokNews_1.png)
+:::
+
+El subtítulo "% of U.S. adults who regularly get news from TikTok, by age group" proporciona detalles adicionales al aclarar que los datos están segmentados por grupos de edad y refuerza que la información se refiere al uso regular de TikTok para obtener noticias.
+
+Mientras que el título y el subtítulo que deberían acompañar a cualquier gráfico, la manera de redactarlo puede variar según el contexto y el mensaje que se quiera transmitir. En el ejemplo anterior, el título centra la atención en un grupo de edad específico, mientras que el crecimiento se observa en todos los grupos. Cabría la posibilidad de otros títulos más generales como “Crecimiento en el uso de TikTok como fuente de noticias en EE. UU. por grupos de edad”, o centrados en otros grupos de edad.
+
+La elección de fuentes y colores debe ser estratégica para garantizar la legibilidad, jerarquía visual y consistencia. El título debe ir en una fuente destacada y clara. Por ejemplo, una fuente de palo seco (sans-serif) o moderna para mayor legibilidad y claridad. El tamaño debe ser el más grande de todos, normalmente entre 16 y 24 puntos, dependiendo del tamaño de la gráfica. El estilo puede ser negrita para destacar. El color sugerido es oscuro que contraste con el fondo, pero sin ser negro puro para suavizar el impacto visual (p. ej., un gris oscuro: #333333, un azul marino: #003F5C o un negro suave: #2C2C2C). También se puede destacar aquellas palabras clave para interpretar la gráfica, o emplear un código de colores a modo de leyenda como en el ejemplo de la [Figura @fig-titulo-esadeecpol].
+
+::: {#fig-titulo-esadeecpol}
+![](images/GYJITPuXwAA61Ti.jpg)
+
+Fuente: [EsadeEcPol](https://x.com/EsadeEcPol/status/1838121600459120721)
+:::
+
+El subtítulo tiene que ir en fuente un poco más pequeña y ligera que complemente el título, generalmente de la misma familia tipográfica pero con un peso más ligero. Aunque también se puede jugar con el contraste de fuentes como se hace en el ejemplo. El tamaño tiene que ser más pequeño que el título, entre 12 y 18 puntos, dependiendo de la importancia del subtítulo. Se puede elegir un estilo cursiva si se busca darle un matiz informativo, como en el ejemplo anterior de la [Figura @fig-titulo-pew-research]. El color debe tener un tono más suave que el del título, pero manteniendo un contraste suficiente (p. ej., gris medio: #666666 o #888888, ó un azul grisáceo: #4f6d7a).
+
+La **alineación del texto** es crucial para facilitar la lectura. Justificar los textos a la izquierda en lugar de centrarlos o alinearlos a la derecha es una estrategia eficaz, ya que sigue el patrón de lectura natural (de izquierda a derecha en muchas lenguas). Esto ayuda a que los ojos del lector fluyan de manera más natural, reduciendo el esfuerzo cognitivo.
+
+Finalmente, en el caso de los **créditos o notas** se debe emplear una fuente discreta, pequeña pero legible. Generalmente se usa la misma fuente que los títulos, pero en su versión más delgada o pequeña. El color en gris o más apagado que el título.

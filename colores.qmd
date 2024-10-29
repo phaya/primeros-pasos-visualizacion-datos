@@ -1,0 +1,231 @@
+# Uso básico de los colores {#sec-colores}
+
+ELEGIR la combinación correcta de colores en una gráfica puede llegar ser la decisión más complicada. La elección del color es un aspecto fundamental que puede influir significativamente en la efectividad y comprensión de los argumentos visuales que se pretenden transmitir. Aunque pueda parecer un detalle menor, esta decisión es compleja porque los colores no solo deben ser estéticamente agradables, sino también funcionales, asegurando que los datos se presenten de manera clara y comprensible para todos los espectadores. En particular, es fundamental considerar la accesibilidad y evitar combinaciones de colores difíciles de distinguir para personas con daltonismo o dificultades visuales.
+
+El **uso de demasiados colores puede generar confusión** y saturación visual. Si tenemos que escoger un solo color, Cole Nussbaumer Knaflic [@knaflic2015storytelling] nos recomienda emplear el azul sobre fondo blanco. Se imprime bien en blanco y negro, y evita problemas a personas con daltonismo (véase [Figura @fig-colores-azul]).
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-colores-azul
+#| fig-cap: "En la gráfica de la izquierda los colores se emplean sin ningún criterio aparente, mientras que en la gráfica de la derecha se opta por una solución menos invasiva."
+library(ggplot2)
+library(gridExtra)
+
+# Creamos un conjunto de datos de ejemplo
+datos <- data.frame(
+  categoria = c("A", "B", "C", "D", "E"),
+  valor = c(10, 15, 7, 12, 20)
+)
+
+# Primera gráfica con colores diferentes para cada barra
+grafica1 <- ggplot(datos, aes(x = categoria, y = valor, fill = categoria)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Mejorable",
+       x = "",
+       y = "")
+
+# Segunda gráfica con todas las barras en el color #4F81BD
+grafica2 <- ggplot(datos, aes(x = categoria, y = valor)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Adecuado",
+       x = "",
+       y = "")
+
+# Mostramos ambas gráficas una al lado de la otra
+grid.arrange(grafica1, grafica2, ncol = 2)
+
+```
+
+No es ni mucho menos la única alternativa. De hecho, es posible que la elección del color tenga que ajustarse al diseño corporativo o que tenga sentido emplear colores que representen a las entidades involucradas en la visualización. Por ejemplo, el color de las barras de la [Figura @fig-colores-partidos] se corresponde con el color corporativo de cada partido político representado. En este caso el uso de un color para cada barra ayuda a entender el gráfico en vez de confundir ---como ocurría en la [Figura @fig-colores-azul]---.
+
+::: {#fig-colores-partidos}
+![](images/GPtOe7QWgAAzDu-.jpg)
+
+Fuente: [El Pais](https://x.com/kikollan/status/1800120356604162379)
+:::
+
+En cualquier caso, se recomienda no utilizar colores puros [@muth2020beautifulcolors] (véase [Figura @fig-colores-puros]). En particular, en gráficas en blanco y negro es mejor seleccionar una variedad de gris oscuro que un negro puro.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-colores-puros
+#| fig-cap: "La misma gráfica con un azul puro (a la izquierda) y con variante de azul."
+library(ggplot2)
+library(gridExtra)
+
+# Creamos un conjunto de datos de ejemplo
+datos <- data.frame(
+  categoria = c("A", "B", "C", "D", "E"),
+  valor = c(10, 15, 7, 12, 20)
+)
+
+# Primera gráfica con color negro puro
+grafica1 <- ggplot(datos, aes(x = categoria, y = valor)) +
+  geom_bar(stat = "identity", fill = "#0000FF") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Mejorable",
+       x = "",
+       y = "")
+
+# Segunda gráfica con gris oscuro
+grafica2 <- ggplot(datos, aes(x = categoria, y = valor)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Adecuado",
+       x = "",
+       y = "")
+
+# Mostramos ambas gráficas una al lado de la otra
+grid.arrange(grafica1, grafica2, ncol = 2)
+
+```
+
+El uso de colores **debe ser siempre intencional** para cumplir su propósito de manera efectiva. No se trata solo de hacer que el diseño se vea atractivo, sino de usar los colores como herramientas para guiar la atención del espectador y resaltar la información más importante. Cada color debe elegirse con un propósito específico en mente: destacar datos críticos, diferenciar categorías o grupos, o crear contrastes que mejoren la legibilidad. La [Figura @fig-colores-resaltado] emplea para resaltar un dato una paleta de dos colores: un gris como color base y un azul o un naranja como color para enfatizar.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-colores-resaltado
+#| fig-cap: "Dos alternativas para resaltar empleando azul o naranja combinado con gris."
+library(ggplot2)
+library(gridExtra)
+
+# Creamos un conjunto de datos de ejemplo
+datos <- data.frame(
+  categoria = c("A", "B", "C", "D", "E"),
+  valor = c(10, 15, 7, 12, 20)
+)
+
+# Definimos la categoría que queremos resaltar
+categoria_resaltada <- "C"
+
+# Primera gráfica: barra resaltada en azul
+grafica_azul <- ggplot(datos, aes(x = categoria, y = valor, fill = categoria)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = ifelse(datos$categoria == categoria_resaltada, "#4F81BD", "#D3D3D3")) +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Barra resaltada en azul",
+       x = "",
+       y = "")
+
+# Segunda gráfica: barra resaltada en naranja
+grafica_naranja <- ggplot(datos, aes(x = categoria, y = valor, fill = categoria)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = ifelse(datos$categoria == categoria_resaltada, "#FFA500", "#D3D3D3")) +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Barra resaltada en naranja",
+       x = "",
+       y = "")
+
+# Mostramos ambas gráficas una al lado de la otra
+grid.arrange(grafica_azul, grafica_naranja, ncol = 2)
+
+```
+
+Según Lisa Charlotte Muth [@muth2018choosingcolors], el color gris se considera el más importante en la visualización de datos. Este color facilita que los colores que se utilizar para enfatizar resalten más ---como hemos visto en el ejemplo anterior---. El gris también es útil para datos de contexto general, y para suavizar la impresión visual general de los gráficos (véase la gráfica [@fig-colores-gris].
+
+```{r echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, info=FALSE}
+#| label: fig-colores-gris
+#| fig-cap: "La gráfica muestra la evolución de la población de todas los paises del mundo combinada con la evolución de distintas áreas geográficas. El color gris se emplea para las series de cada pais. Se observa, por ejemplo, como Oceanía tiene menos población en su conjunto que una gran mayoría de paises. La gráfica se basa en la que se pueden encontrar en la página 63 del libro _The Art of Statistics: How to Learn from Data_ de David Spiegelhalter [@spiegelhalter2019art]. La fuente de los datos es Our World in Data: [https://ourworldindata.org/population-growth](https://ourworldindata.org/population-growth)"
+library(ggplot2)
+library(here)
+library(tidyverse)
+library(stringr)
+library(scales)  # Asegúrate de tener la librería scales instalada
+library(ggrepel)  # Para evitar superposición de etiquetas
+
+# Leer un ejemplo de datos
+data <- read_delim(here("data/population-and-demography.csv"), delim = ";")
+
+# Asegurarse de que la columna Population sea numérica
+data <- data %>%
+  mutate(Population = as.numeric(Population))
+
+
+# Definir las entidades a resaltar en azul
+highlight_entities <- c("Africa (UN)", "Americas (UN)", "Asia (UN)", 
+                        "Europe (UN)", "Latin America and the Caribbean (UN)", 
+                        "Northern America (UN)", "Oceania (UN)", "World")
+
+# Definir las entidades que queremos filtrar (excluir)
+exclude_entities <- c("High-income countries", "Land-locked developing countries (LLDC)",
+                      "Least developed countries", "Less developed regions", 
+                      "Low-income countries", "Lower-middle-income countries", 
+                      "More developed regions", "Small island developing states (SIDS)", 
+                      "Upper-middle-income countries")
+
+# Filtrar el dataset para excluir las entidades no deseadas
+filtered_data <- data %>%
+  filter(!Entity %in% exclude_entities)
+
+# Obtener el último año para cada entidad
+last_year_data <- filtered_data %>%
+  group_by(Entity) %>%
+  filter(Year == max(Year)) %>%
+  ungroup()
+
+# Modificar las etiquetas eliminando "(UN)"
+last_year_data <- last_year_data %>%
+  mutate(Entity_clean = str_replace(Entity, " \\(UN\\)", ""),
+         Entity_clean = case_when(
+           Entity_clean == "Latin America and the Caribbean" ~ "Latin America",
+           Entity_clean == "Northern America" ~ "N. America",
+           TRUE ~ Entity_clean
+         ))
+
+# Crear el gráfico
+ggplot() +
+  # Dibujar primero las líneas grises (entidades no resaltadas)
+  geom_line(data = filtered_data %>% filter(!Entity %in% highlight_entities),
+            aes(x = Year, y = Population, group = Entity),
+            color = "#F3F3F3", size = 0.5) +  # Tamaño de las líneas grises
+  # Dibujar las líneas resaltadas encima de las grises
+  geom_line(data = filtered_data %>% filter(Entity %in% highlight_entities),
+            aes(x = Year, y = Population, group = Entity),
+            color = "#4F81BD", size = 0.7) +  # Tamaño de las líneas resaltadas
+  # Añadir las etiquetas al final de las series temporales para las entidades resaltadas usando ggrepel
+  geom_text_repel(data = last_year_data %>% filter(Entity %in% highlight_entities),
+                  aes(x = Year, y = Population, label = Entity_clean),
+                  color = "#4F81BD",
+                  nudge_x = 5,   # Mover las etiquetas un poco a la derecha
+                  direction = "y",  # Permitir movimiento vertical para evitar solapamiento
+                  hjust = 0,  # Alinear las etiquetas a la izquierda
+                  size = 3,    # Tamaño del texto de las etiquetas
+                  segment.color = "#4F81BD") +  # Color de las líneas de conexión
+  scale_y_log10(labels = label_number(scale = 1e-6, suffix = " M"),
+                limits = c(1e6, 1e10),
+                breaks = scales::trans_breaks("log10", function(x) 10^x)) +  # Escala logarítmica en millones
+  xlim(min(filtered_data$Year), max(filtered_data$Year) + 15) +
+  labs(title = "Evolución de la población mundial 1950-2023",
+       subtitle = "Población en millones (M)",
+       x = "",
+       y = "") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none")  # Quitar la leyenda
+```

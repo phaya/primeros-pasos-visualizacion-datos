@@ -1,0 +1,59 @@
+# Glosario {.unnumbered}
+
+**Alineación del texto** es la forma en que se distribuye el texto dentro de la gráfica. Se refiere a la posición del texto con respecto a los márgenes o los bordes, y tiene un impacto tanto visual como funcional en el diseño de gráfica.
+
+**Créditos** en un gráfico son anotaciones que reconocen las fuentes de los datos, el autor de la visualización, o las herramientas utilizadas para su creación.
+
+**Datos categóricos** son aquellos que representa características o atributos que se clasifican en categorías distintas. Ejemplos incluyen el género, colores o tipos de productos.
+
+**Datos ordinales** son un tipo de datos categóricos que tienen un orden o jerarquía en sus valores, aunque las distancias entre estos valores no son necesariamente iguales o medibles.
+
+**Eje** en un gráfico es una línea de referencia que establece una dimensión o dirección en el plano de la visualización, normalmente usada para medir y organizar los datos representados.
+
+**Eje X** es el eje horizontal en un gráfico, utilizado generalmente para representar la variable independiente o las categorías que se desean analizar.
+
+**Eje Y** es el eje vertical en un gráfico y generalmente representa la variable dependiente o el valor numérico asociado a las categorías o intervalos mostrados en el eje X.
+
+**Eje secundario** en un gráfico es un segundo eje de valores que se agrega para representar una serie de datos adicional con una escala diferente a la del eje principal.
+
+**Escala de un gráfico** es el rango de valores representado en los ejes y la forma en que estos valores se distribuyen, indicando la unidad de medida y los intervalos entre cada marca del eje.
+
+**Etiquetas de los ejes** son los textos asignados a los ejes X y Y de un gráfico. Estas etiquetas indican claramente qué representa cada eje, proporcionando contexto a los datos mostrados y facilitando la interpretación de la visualización.
+
+**Fluidez en el manejo de datos** (*data fluency* o *data literacy*) es la capacidad de comprender, interpretar y trabajar con datos de manera eficiente y efectiva. Implica habilidades para recopilar, limpiar, analizar y visualizar datos, así como para extraer conclusiones relevantes y comunicar hallazgos de manera clara.
+
+**Frecuencia absoluta** es el número de veces que se observa un valor particular en una variable categórica.
+
+**Frecuencia relativa** expresa la proporción o el porcentaje de ocurrencias de un valor en una variable categoría.
+
+**Gráficos 3D** son representaciones visuales de datos que utilizan tres dimensiones (ejes X, Y y Z) para mostrar relaciones complejas y patrones en conjuntos de datos.
+
+**Gráfico de barras** (*bar chart*) es una representación visual de datos en la que se utilizan barras rectangulares para mostrar el valor de diferentes categorías. Cada barra representa una categoría y su altura o longitud es proporcional al valor que representa, facilitando la comparación entre distintas categorías.
+
+**Gráfico de líneas** (*line chart*) es una representación visual que muestra la evolución de datos a lo largo del tiempo o de una secuencia continua, utilizando puntos conectados por líneas. Cada punto representa un valor en un momento específico o en un rango determinado, y las líneas que los conectan permiten observar tendencias, patrones y cambios en los datos.
+
+**Gráfico de tartas** (*pie chart*) es una representación visual que muestra datos en forma de un círculo dividido en sectores. Cada sector representa una categoría y su tamaño es proporcional al valor o porcentaje que representa del total.
+
+**Narrativas basadas en datos** (*data storytelling*) son historias o explicaciones que usan datos cuantitativos y cualitativos para comunicar un mensaje o encontrar patrones, tendencias y conexiones significativas en la información.
+
+**Leyenda** en un gráfico es una guía visual que explica el significado de los colores, símbolos o patrones utilizados para representar diferentes categorías o series de datos.
+
+**Otros** (categoría) se utilizapara agrupar elementos que representan valores demasiado pequeños o diversos como para mostrarlos individualmente. Esto ayuda a simplificar la interpretación del gráfico o tabla sin perder información relevante.
+
+**Periodismo de datos** (*data journalism*) es una disciplina que combina el análisis de datos con la narrativa periodística para descubrir, investigar y contar historias basadas en información cuantitativa.
+
+**Rango de los ejes** en un gráfico se refiere al intervalo de valores que se muestran en los ejes, ya sea en el eje X (horizontal) o en el eje Y (vertical). Este rango determina los valores mínimos y máximos que se representan en cada eje y tiene un impacto directo en cómo se visualizan y se interpretan los datos.
+
+**Rejilla** es un conjunto de líneas horizontales y verticales en el fondo de un gráfico que ayuda a los espectadores a leer los valores de los datos con mayor precisión. Estas líneas, que se extienden desde los ejes, sirven como guía visual para alinear los puntos, barras o elementos de datos con sus valores exactos en los ejes X e Y.
+
+**Subtítulo** de una gráfica es una línea adicional que complementa el título proporcionando más contexto o detalles específicos sobre los datos presentados
+
+**Serie temporal** es un conjunto de datos recopilados y organizados en intervalos de tiempo específicos y consecutivos, lo que permite analizar cómo cambia una variable a lo largo del tiempo.
+
+**Título** de una gráfica es una breve descripción que indica de manera clara y directa el tema o propósito de la visualización. Su objetivo es dar al espectador una idea general de la información presentada, facilitando la comprensión del contexto de los datos.
+
+**Títulos de los ejes** son textos que se colocan junto a los ejes de un gráfico para describir claramente qué datos representan.
+
+**Variable categórica** (véase *datos categóricos*).
+
+**Visualización de datos** (*data visualization*, *dataviz*) es el proceso de representar información y datos mediante gráficos, tablas y otros elementos visuales, lo que facilita su comprensión y análisis. Ayuda a identificar patrones, tendencias y relaciones en los datos que serían difíciles de detectar en su forma cruda.

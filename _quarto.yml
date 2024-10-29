@@ -1,0 +1,40 @@
+project:
+  type: book
+  output-dir: docs
+
+language: _language-es.yml
+
+book:
+  title: "Primeros pasos en visualización de datos"
+  author: "Pablo A Haya Coll"
+  
+  page-footer:
+    left: |
+      Este documento ha sido escrito por Pablo A Haya Coll.
+    right: |
+      Este sitio ha sido creado con <a href="https://quarto.org/">Quarto</a>.
+  
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - motivacion.qmd
+    - elementos_grafica.qmd
+    - tipo_grafico.qmd
+    - titulos_subtitulos.qmd
+    - ejes.qmd
+    - valores.qmd
+    - menos_es_mas.qmd
+    - colores.qmd
+    - glosario.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

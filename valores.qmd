@@ -1,0 +1,194 @@
+# Valores {#sec-valores}
+
+SIGUIENDO con las recomendaciones para visualizar los ejes correctamente, en este capítulo nos vamos a centrar en aspectos relativos a los valores que se representan en los ejes.
+
+El **orden de los valores** del eje X se tiene que realizar según algún criterio que facilite la interpretación, ya sea cronológico, alfabético o por magnitud (como es el caso del ejemplo de la [Figura @fig-ordenar-valores]. Un eje X desordenado puede provocar confusión y dificultar la comparación entre los datos.
+
+En gráficos de barras, si las categorías no tienen un orden natural (**datos ordinales**), se pueden organizar alfabéticamente o según un criterio relevante, como la magnitud de los datos.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-ordenar-valores
+#| fig-cap: "La figura de la izquierda muestra un eje X desordenado, en contraposición de la figura de la derecha que muestra un eje ordenado por valor"
+library(ggplot2)
+library(gridExtra)
+
+# Crear datos de ejemplo
+datos <- data.frame(
+  categoria = c("A", "B", "C", "D", "E"),
+  valor = c(3, 7, 1, 9, 5)
+)
+
+# Gráfico 1: Sin ordenar el eje X
+grafico1 <- ggplot(datos, aes(x = categoria, y = valor)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  scale_y_continuous(breaks = seq(0, 10, by = 2)) + # Marcas de escala correctas
+  labs(title = "Eje X sin ordenar", x="", y="") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfico 2: Ordenando el eje X por valor
+grafico2 <- ggplot(datos, aes(x = reorder(categoria, -valor), y = valor)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  scale_y_continuous(breaks = seq(0, 10, by = 2)) + # Marcas de escala correctas
+  labs(title = "Eje X ordenado por valor", x="", y ="") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Mostrar ambos gráficos lado a lado
+grid.arrange(grafico1, grafico2, ncol = 2)
+
+```
+
+Es importante **ajustar la frecuencia de las marcas de escala** (*ticks*) para evitar que el gráfico se vea abarrotado o, por el contrario, demasiado vacío. Los intervalos entre las marcas deben ser lógicos y consistentes, utilizando múltiplos redondos como 1, 2, 5 o 10, lo que facilita la interpretación de los datos. En caso de que se necesite mayor precisión visual, se pueden utilizar divisiones menores, siempre cuidando de no sobrecargar el gráfico.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-frecuencia-marcas
+#| fig-cap: "La figura de la izquierda muestra un eje X desordenado, en contraposición de la figura de la derecha que muestra un eje ordenado por valor"
+library(ggplot2)
+library(gridExtra)
+
+# Crear datos de ejemplo
+datos <- data.frame(
+  categoria = c("A", "B", "C", "D", "E"),
+  valor = c(3, 7, 1, 9, 5)
+)
+
+# Gráfico 1: Con granularidad de marcas de escala excesiva
+grafico1 <- ggplot(datos, aes(x = categoria, y = valor)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  scale_y_continuous(breaks = seq(0, 10, by = 0.5)) + # Granularidad excesiva
+  labs(title = "Granularidad de marcas excesiva", x="", y="") +
+  theme(axis.text.y = element_text(color = "black", size = 12), # Personalizar marcas del eje Y
+        axis.ticks.y = element_line(color = "black", size = 0.5)) + # Personalizar las líneas de marcas 
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfico 2: Con marcas de escala correctas
+grafico2 <- ggplot(datos, aes(x = reorder(categoria,valor), y = valor)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  scale_y_continuous(breaks = seq(0, 10, by = 2)) + # Marcas de escala correctas
+  labs(title = "Marcas de escala correctas", x="", y="") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Mostrar ambos gráficos lado a lado
+grid.arrange(grafico1, grafico2, ncol = 2)
+```
+
+En cuanto a la visibilidad de las líneas de los ejes, estas deben ser claramente visibles pero sin ser demasiado gruesas, ya que esto podría distraer del contenido principal de la gráfica.
+
+**Incluir los valores directamente** en el gráfico puede facilitar la comprensión rápida de los puntos clave, siempre y cuando se haga de manera que no interfiera con la lectura visual. Es importante colocar los valores de forma discreta, ya sea sobre o dentro de las barras o puntos, asegurando que estén alineados con el diseño y sin cubrir otros elementos del gráfico.
+
+El tamaño de la fuente debe ser suficientemente grande para que sea legible, pero no tan prominente que domine el gráfico. Además, es fundamental garantizar un buen contraste entre los números y los elementos gráficos, de modo que sean visibles sin sobrecargar el diseño. Usa colores suaves para los ejes si los datos deben ser el foco principal, pero que mantengan legibilidad (véase los dos ejemplos de la [Figura @fig-incluir-valores]).
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-incluir-valores
+#| fig-cap: "Dado una misma gráfica se muestran dos versiones. En la figura de la izquierda no se han incluido los valores, mientras que en la derecha se han integrado como parte de la misma."
+#| 
+library(ggplot2)
+library(gridExtra)
+
+# Crear los datos
+valores <- c(5, 7, 3, 8, 4)
+categorias <- c("A", "B", "C", "D", "E")
+df <- data.frame(categorias, valores)
+
+# Gráfico 1: Sin valores visibles en los ejes
+g1 <- ggplot(df, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  labs(title="Sin valores visibles", x="", y="") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Gráfico 2: Con valores visibles, valores dentro de las barras
+g2 <- ggplot(df, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title="Con valores visibles", x="", y="") +
+  theme_minimal() +
+  geom_text(aes(label = valores), vjust = 1.5, size= 3, color = "#EEEEEE") +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+grid.arrange(g1, g2, ncol = 2)
+```
+
+Hay que tener en cuenta que el **exceso de precisión en los números no siempre mejora la comprensión del gráfico**. De hecho, puede añadir ruido visual que distraiga del mensaje principal. Un buen principio a seguir es ofrecer la cantidad de decimales que tiene sentido dentro del contexto. Si la precisión adicional no afecta la interpretación, entonces es mejor simplificar los números.
+
+Redondear los decimales de manera adecuada es una práctica recomendable, sobre todo en casos donde no se necesita un alto grado de precisión. Por ejemplo, al representar porcentajes, suele ser razonable no incluir decimales.
+
+Si los números son enteros, evitar siempre incluir decimales (véase la [Figura @fig-decimales-valores])
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-decimales-valores
+#| fig-cap: "La gráfica de la derecha representa valores enteros pero el eje se etiqueta con valores decimales. La gráfica de la izquierda corrige este error."
+library(ggplot2)
+library(gridExtra)
+
+# Crear los datos
+valores <- c(5, 7, 3, 8, 4)
+categorias <- c("A", "B", "C", "D", "E")
+df <- data.frame(categorias, valores)
+
+# Gráfico 1: Con dos decimales en el eje Y
+g1 <- ggplot(df, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "lightgray") +
+  labs(title="Con dos decimales en el eje Y", x= "", y="") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank()) +
+  scale_y_continuous(labels = scales::number_format(accuracy = 0.01))  # Mostrar dos decimales
+
+# Gráfico 2: Sin decimales en el eje Y
+g2 <- ggplot(df, aes(x = categorias, y = valores)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title="Sin decimales en el eje Y", x="", y="") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank()) +
+  scale_y_continuous(labels = scales::number_format(accuracy = 1))  # Mostrar sin decimales
+
+grid.arrange(g1, g2, ncol = 2)
+
+```
+
+Finalmente, es altamente recomendable **evitar gráficos que utilizan más de un eje Y**, también conocido como **eje secundario**. Estos gráficos son díficiles de interpretar dado que los rangos y escalas de los ejes pueden ser diferentes, lo cual dificulta realizar una comparación adecuada entre las variables, como se puede observa en la [Figura @fig-eje-secundario]
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-eje-secundario
+#| fig-cap: "Gráfica con dos ejes cada uno con un rango de valores distinto."
+library(ggplot2)
+library(gridExtra)
+
+# Crear datos de ejemplo
+set.seed(123)
+data <- data.frame(
+  x = 1:10,
+  y1 = rnorm(10, 100, 10),  # Primera serie de datos
+  y2 = rnorm(10, 10, 1)     # Segunda serie de datos
+)
+
+# Crear gráfico con ggplot2
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = y1), color = "#4F81BD") +   # Serie 1 en eje primario
+  geom_line(aes(y = y2 * 10), color = "#FFA500") + # Serie 2, multiplicada para escalar al eje primario
+  scale_y_continuous(
+    name = "Valores de Y1 (eje primario)",    # Nombre del eje primario
+    sec.axis = sec_axis(~ . / 10, name = "Valores de Y2 (eje secundario)")  # Eje secundario con transformación inversa
+  ) +
+  labs(x = "") +
+  theme_minimal()
+
+```

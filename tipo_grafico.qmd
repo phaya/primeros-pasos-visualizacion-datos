@@ -1,0 +1,230 @@
+# Decidir el tipo de gráfico correcto {#sec-tipo-grafica}
+
+LA PRIMERA decisión al crear una visualización es elegir el tipo de gráfico más adecuado. Una representación incorrecta puede arruinar toda la interpretación. En su libro *Storytelling con datos*, Cole Nassbaumer [@knaflic2015storytelling] identifica hasta siete tipos básicos entre los que elegir.
+
+De esta tipología, hay dos gráficos que es fundamental dominar: el **gráfico de barras** (*bar chart*) y el **gráfico de líneas** (*line chart*).
+
+El **gráfico de barras** se utiliza para visualizar **datos categóricos**, los cuales representan grupos o categorías. Nuestro objetivo es mostrar cuántos elementos hay en cada grupo (o categoría). Por ejemplo, los datos categóricos pueden reflejar la distribución de los grupos sanguíneos en la población, el número de mujeres y hombres en una universidad, la distribución de nacimientos por mes o el número de bibliotecas por distrito.
+
+Los valores de cada categoría pueden representar la cantidad absoluta (**frecuencia absoluta**) o el porcentaje respecto al total (**frecuencia relativa**). La frecuencia absoluta es el número total de ocurrencias de una categoría. Por ejemplo, si en una encuesta 50 personas tienen sangre tipo A, la frecuencia absoluta de esa categoría es 50. La frecuencia relativa es el porcentaje que representa cada categoría respecto al total. Siguiendo el ejemplo anterior, si en la misma encuesta hay 200 personas, entonces la frecuencia relativa de los que tienen sangre tipo A sería 50/200 = 0.25, es decir, el 25 %. En la [Figura @fig-frec-relativa-absoluta] podemos ver este ejemplo ilustrado.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-frec-relativa-absoluta
+#| fig-cap: "Gráfico de barras mostrando dos versiones de los mismos datos: a la izquierda, la frecuencia absoluta, y la derecha la frecuencia relativa. La forma de la gráfica se mantiene en ambos casos, difiriendo en las etiquetas del eje Y."
+
+library(ggplot2)
+library(gridExtra)
+
+# Crea el conjunto de datos de tipo de sangre
+tipos_sangre <- data.frame(
+  Tipo = c("A", "B", "AB", "O"),
+  Frecuencia = c(50, 60, 20, 70)
+)
+
+# Calcula los porcentajes
+tipos_sangre$Porcentaje <- (tipos_sangre$Frecuencia / sum(tipos_sangre$Frecuencia)) * 100
+
+# Crea el gráfico de barras con valores absolutos
+grafico_absoluto <- ggplot(tipos_sangre, aes(x = reorder(Tipo, -Frecuencia), y = Frecuencia)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title = "Valores Absolutos", x = "", y = "") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Crea el gráfico de barras con porcentajes
+grafico_porcentajes <- ggplot(tipos_sangre, aes(x = reorder(Tipo, - Porcentaje), y = Porcentaje)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title = "Porcentaje (%)", x = "", y = "") +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Mostrar los dos gráficos uno al lado del otro
+grid.arrange(grafico_absoluto, grafico_porcentajes, ncol = 2)
+```
+
+Así, cada barra representa un grupo o categoría distinta. En ambos casos, la altura de las barras corresponde al valor de cada categoría.
+
+En su formato estándar, las barras se orientan verticalmente: las categorías se colocan en el **eje X** y las frecuencias en el eje Y. Sin embargo, en algunos casos puede ser más conveniente **orientar las barras horizontalmente**. En este formato, las categorías se ubican en el **eje Y** y los valores en el eje X, lo que facilita la lectura de los nombres de las categorías, especialmente cuando son numerosas o son nombres largos.
+
+Si tenemos una lista larga de productos vendidos en una tienda y queremos mostrar las cantidades vendidas por producto, la orientación horizontal de las barras ayuda a visualizar mejor los nombres de los productos al estar dispuestas en el eje Y (véase [Figura @fig-barras-horizontales])
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-barras-horizontales
+#| fig-cap: "Gráfico de barras orientado horizontalmente para poder leer con facilidad los nombres de las categorías."
+
+library(ggplot2)
+
+# Crea un conjunto de datos de ejemplo con productos y cantidades vendidas
+productos <- data.frame(
+  Producto = c("Manzanas", "Naranjas", "Plátanos", "Fresas", "Peras", "Uvas", "Mangos", "Kiwi", "Papaya", "Piña",
+               "Melón", "Cerezas", "Duraznos", "Ciruelas", "Sandía", "Limones", "Mandarinas", "Arándanos", "Frambuesas", "Coco"),
+  Cantidad = c(150, 120, 200, 90, 110, 130, 50, 60, 80, 95, 85, 100, 125, 70, 160, 45, 115, 75, 55, 35)
+)
+
+# Crea el gráfico de barras horizontales
+ggplot(productos, aes(x = Cantidad, y = reorder(Producto, Cantidad))) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title = "Cantidad Vendida por Producto", x = "", y = "") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()) 
+
+```
+
+Cuando hay muchas categorías, algunas con frecuencias muy pequeñas pueden distraer la atención del análisis principal. Agrupar estas categorías en una sola llamada **Otros** puede simplificar la interpretación, pero hay que tener cuidado de que no distorsione la realidad de los datos. Si estamos representando los motivos de consulta médica en un hospital y las categorías más importantes son fiebre, dolor de cabeza, y tos, pero también hay otras causas con muy pocos casos (como erupciones cutáneas o problemas de visión), podríamos agrupar estas últimas en una sola barra denominada “Otros”.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-otros
+#| fig-cap: "Gráfico de barras que incluye una categoría 'Otros', la cual agrupa los valores de las categorías con pocos casos en una sola categoría."
+
+
+library(ggplot2)
+
+# Crea un conjunto de datos con motivos de consulta médica
+consultas <- data.frame(
+  Motivo = c("Fiebre", "Dolor de cabeza", "Tos", "Erupciones cutáneas", "Problemas de visión", "Dolor abdominal", "Mareos", "Náuseas"),
+  Casos = c(120, 100, 80, 5, 3, 2, 1, 4)
+)
+
+# Define un umbral para agrupar los motivos menos frecuentes como "Otros"
+umbral <- 10
+
+# Crea una nueva columna para agrupar motivos con pocos casos en "Otros"
+consultas$MotivoAgrupado <- ifelse(consultas$Casos < umbral, "Otros", consultas$Motivo)
+
+# Agrupa los datos por el nuevo motivo
+consultas_agrupadas <- aggregate(Casos ~ MotivoAgrupado, data = consultas, sum)
+
+# Crea el gráfico de barras con los motivos de consulta, agrupando los menos frecuentes en "Otros"
+ggplot(consultas_agrupadas, aes(x = reorder(MotivoAgrupado, Casos), y = Casos)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  labs(title = "Motivos de Consulta Médica en el Hospital", subtitle="Número de Casos en 2024", x = "", y = "", ) +
+  coord_flip()  +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()) 
+```
+
+Los gráficos de tarta (*pie charts*) muestran proporciones como segmentos de un círculo. Aunque los gráficos de barras a veces se comparan con los gráficos de tarta, estos últimos suelen estar desaconsejados. Los gráficos de tarta, en general, son más difíciles de interpretar que los gráficos de barras. Su principal limitación es que es más difícil comparar los tamaños de las áreas en segmentos que la altura de las barras. Además, el gráfico de tarta tiende a ser ineficaz cuando hay más de tres o cuatro categorías porque las proporciones se vuelven menos distinguibles. Solo tiene sentido usar un gráfico de tarta cuando hay muy pocas categorías como en la [Figura @fig-pie-chart-pew-research].
+
+::: {#fig-pie-chart-pew-research}
+![](images/clipboard-4150101725.png)
+
+Fuente: [PewResearch](https://www.pewresearch.org/?attachment_id=187859)
+:::
+
+Si solo contamos con dos grupos, como fumadores y no fumadores, puede ser incluso más adecuado simplemente utilizar un número en lugar de un gráfico. Así, si sólo queremos destacar que el 25 % de la población es fumadora, es más claro decir directamente "El 25 % de la población fuma".
+
+En ningún caso emplearemos **gráficos en 3D**. Estos gráficos suelen ser confusos y difíciles de interpretar debido a la distorsión visual, lo que complica la comparación precisa de la información.
+
+Por otro lado, los **gráficos de líneas** son útiles para visualizar datos que varían en el tiempo (**series temporales**). Cuando trabajamos con una serie temporal que refleja cómo una variable cambia a lo largo del tiempo, la forma más adecuada de representarla es con un gráfico de líneas. Estos gráficos permiten ver fácilmente las tendencias, los picos y las caídas de una variable a lo largo del tiempo. Ejemplos de series temporales incluyen el precio de la vivienda, el consumo eléctrico, el número de homicidios o la cantidad de visitas diarias a una página web. En los gráficos de líneas, el eje X representa el tiempo y el eje Y representa el valor de la variable en cada momento del tiempo. 
+
+Supongamos que queremos representar el consumo de electricidad a lo largo de un año. En el gráfico de líneas, el eje X sería el tiempo (en meses o días) y el eje Y el consumo en kilovatios por hora (kWh). Si el consumo aumenta durante los meses de verano debido al uso de aire acondicionado, esto se vería como un pico en la línea del gráfico (véase [Figura @fig-serie-temporal]).
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-serie-temporal
+#| fig-cap: "Serie temporal que representa la evolución en el tiempo del consumo de energia."
+
+library(ggplot2)
+
+# Crea un conjunto de datos simulando el consumo de energía en kWh por mes
+meses <- c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")
+consumo_kwh <- c(300, 280, 310, 320, 400, 500, 600, 620, 450, 400, 350, 320)
+
+# Crea un data frame con los datos
+consumo_energia <- data.frame(Mes = factor(meses, levels = meses), Consumo = consumo_kwh)
+
+# Crea el gráfico de líneas
+ggplot(consumo_energia, aes(x = Mes, y = Consumo, group = 1)) +
+  geom_line(color = "#4F81BD", size = 1) +        # Línea en color azul
+  geom_point(color = "#4F81BD", size = 2) +       # Puntos en la línea
+  labs(title = "Consumo de Energía (kWh) a lo largo del año", 
+       x = "", 
+       y = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
+  theme(panel.grid.minor.y = element_blank()) 
+  
+```
+
+Los gráficos de líneas también permiten comparar múltiples series temporales al representar varias líneas en un mismo gráfico. Por ejemplo, podríamos comparar el precio de la vivienda en diferentes ciudades a lo largo del tiempo, trazando una línea para cada ciudad (véase [Figura @fig-varias-series-temporales]).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#| label: fig-varias-series-temporales
+#| fig-cap: "Combinación de varias series temporales en la misma visualización. Fuente de datos: Our World in Data: https://ourworldindata.org/population-growth"
+library(ggplot2)
+library(here)
+library(tidyverse)
+library(stringr)
+library(scales)
+library(ggrepel)
+
+# Leer un ejemplo de datos
+data <- read_delim(here("data/population-and-demography.csv"), delim = ";")
+
+# Asegurarse de que la columna Population sea numérica
+data <- data %>%
+  mutate(Population = as.numeric(Population))
+
+# Filtrar para excluir entidades con Code como NA
+filtered_data <- data %>%
+  filter(!is.na(Code)) %>%
+  filter(Entity != "World")
+
+# Obtener el último año disponible
+last_year <- max(filtered_data$Year, na.rm = TRUE)
+
+# Filtrar el dataset para el último año y obtener los cinco más poblados
+top_5_populated <- filtered_data %>%
+  filter(Year == last_year) %>%
+  arrange(desc(Population)) %>%
+  slice(1:5) %>%
+  pull(Entity)
+
+# Filtrar el dataset para incluir solo los cinco más poblados
+filtered_top_5_data <- filtered_data %>%
+  filter(Entity %in% top_5_populated)
+
+# Definir los colores manualmente para cada país
+colors_manual <- c(
+  "China" = "#00429d", 
+  "India" = "#73a2c6",
+  "United States" = "#ffa59e",
+  "Indonesia" = "#f4777f",
+  "Pakistan" = "#93003a"
+)
+
+# Crear el gráfico
+ggplot(filtered_top_5_data, aes(x = Year, y = Population, color = Entity, group = Entity)) +
+  geom_line(size = 1.2) +  # Aumentar el grosor de las líneas
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = " M"),
+                     limits = c(0, 1.5e9),  # Establecer el límite de 0 a 1500 millones
+                     breaks = seq(0, 1.5e9, by = 500e6)) +
+  scale_color_manual(values = colors_manual) +  # Asignar colores manualmente
+  labs(title = "Evolución de la población de los cinco países más poblados",
+       subtitle = "Población en millones (M)",
+       x = "",
+       y = "") +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    legend.position = "none") +  # Ocultar la leyenda
+  # Añadir etiquetas al final de las líneas
+  geom_text_repel(
+    data = filtered_top_5_data %>% group_by(Entity) %>% filter(Year == max(Year)),
+    aes(label = Entity, color = Entity),
+    nudge_x = 5,      # Mueve las etiquetas un poco a la derecha
+    direction = "y",  # Permitir movimiento solo en la dirección 'y'
+    hjust = 0,        # Alinea las etiquetas a la izquierda
+    segment.color = "grey50"  # Color de las líneas que conectan las etiquetas con las líneas de datos
+  )
+```

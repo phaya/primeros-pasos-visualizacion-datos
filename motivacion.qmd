@@ -1,0 +1,68 @@
+# Motivación
+
+> "El mayor valor de una imagen es cuando nos obliga a notar lo que nunca esperábamos ver." --- John Tukey
+
+TOMEMOS la anterior cita de John Tukey y observemos cómo cambia dependiendo de su tratamiento ortográfico y gramatical:
+
+-   "Lo vonito de un dibu es ke vemo kosas nuebas."
+-   "Lo bonito de un dibu es que vemos cosas nuevas."
+-   "Una imagen vale más cuando nos muestra algo inesperado."
+-   "El mayor valor de una imagen es cuando nos obliga a notar lo que nunca esperábamos ver."[^motivacion-1]
+
+[^motivacion-1]: La frase original en inglés es "*The greatest value of a picture is when it forces us to notice what we never expected to see.*"
+
+Las cuatro frases comunican una idea similar: *el valor de una imagen o dibujo radica en su capacidad para revelar o mostrarnos algo nuevo o inesperado*. Sin embargo, las frases se expresan de manera diferente en términos de ortografía, gramática y tono. En el primer ejemplo, la frase contiene faltas ortográficas evidentes, lo que dificulta su comprensión. El segundo ejemplo corrige estas faltas, pero usa un lenguaje infantil. La tercera versión respeta la ortografía y la gramática, y comunica el mensaje claramente aunque le faltan matices. En la última frase, que es la cita original, se emplea un lenguaje más elaborado y preciso, que permite expresar la idea con mayor profundidad. Estas variaciones afectan cómo se percibe el mensaje.
+
+La ortografía y la gramática garantizan claridad, comprensión y precisión en el intercambio de ideas. No son solo detalles técnicos, sino herramientas esenciales que aseguran que la comunicación escrita sea clara, efectiva y coherente. Son la base que permite a los hablantes de un idioma entenderse sin ambigüedades, construir relaciones profesionales sólidas y transmitir conocimientos de manera precisa y ordenada.
+
+De la misma manera que la ortografía y la gramática son esenciales para la comunicación escrita, la **visualización de datos** también tiene sus propias reglas. Estas normas, aunque distintas, son igualmente importantes para garantizar que la información sea transmitida de manera efectiva y comprensible. Aspectos como la elección correcta del tipo de gráfico, colores y escalas juegan un rol fundamental en cómo los datos son interpretados por el público.
+
+Las reglas en la visualización de datos no son tan estrictas como en la lengua. A diferencia de la ortografía, donde una letra mal colocada puede alterar completamente el significado de una palabra, en la visualización de datos hay más espacio para la creatividad y las preferencias personales. Sin embargo, romper ciertas convenciones puede llevar a malas interpretaciones o conclusiones erróneas. Por ejemplo, utilizar un **gráfico de tarta** para comparar muchas categorías es más confuso que un **gráfico de barras**, ya que el primero se enfoca en proporciones relativas mientras el segundo destaca las diferencias absolutas de una manera más clara (véase [Figura @fig-tarta-vs-barras]). Asimismo, el uso de colores muy similares puede desorientar al observador en vez de guiarlo a la interpretación correcta.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-tarta-vs-barras
+#| fig-cap: "Comparación entre un gráfico de tareas mal diseñado y su alternativa como gráfico de barras"
+
+library(ggplot2)
+library(gridExtra)
+
+# Crear un conjunto de datos con diez categorías
+data <- data.frame(
+  pais = c("España", "Francia", "Alemania", "Italia", "Portugal", "Países Bajos", 
+                "Suecia", "Noruega", "Grecia", "Suiza"),
+  valor = c(10, 15, 20, 5, 12, 18, 7, 9, 14, 16)
+)
+
+# Colores chillones para el gráfico de tarta
+colores_chillones <- c("#FF5733", "#C70039", "#FFC300", "#DAF7A6", "#581845", "#FF33F6", "#33FF57", "#FF5733", "#33C4FF", "#FF33A1")
+
+# Gráfico de tarta con colores llamativos
+grafico_tarta <- ggplot(data, aes(x = "", y = valor, fill = pais)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  scale_fill_manual(values = colores_chillones) +
+  labs(title = "") +
+  theme(legend.position = "bottom") +
+  theme_void()
+
+# Gráfico de barras horizontal en azul claro
+grafico_barras <- ggplot(data, aes(x = reorder(pais, valor), y = valor)) +
+  geom_bar(stat = "identity", fill = "#4F81BD") +
+  coord_flip() +
+  labs(title = "", x="", y="") +
+  theme_minimal() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank())
+
+# Mostrar ambos gráficos en una sola figura
+grid.arrange(grafico_tarta, grafico_barras, ncol = 2)
+```
+
+Al igual que un texto bien escrito, una visualización clara y ordenada mejora la comunicación entre el creador y el lector, asegurando que el mensaje llegue de forma precisa y directa. Cuando los datos se presentan de manera gráfica, es más fácil identificar patrones, tendencias y relaciones que de otro modo pasarían desapercibidas. Esto mejora significativamente la capacidad de tomar decisiones informadas, ya que proporciona una visión clara y rápida de la información relevante. Al mismo tiempo, estas visualizaciones permiten identificar anomalías o tendencias inusuales, ayudando a detectar problemas o áreas de oportunidad que podrían haber pasado desapercibidos.
+
+En el entorno actual, donde los datos son omnipresentes, dominar las técnicas de visualización es tan crucial como respetar las reglas ortográficas en la escritura. Para profesionales que se dedican al mundo de la comunicando, la visualización de datos es una herramienta fundamental. Al usar gráficos y otras visualizaciones, pueden hacer que datos complejos sean más accesibles al público, contando historias más ricas y fundamentadas en evidencia. En un entorno mediático donde la rapidez y la precisión son esenciales, la capacidad de usar visualizaciones de datos mejora la calidad del periodismo y ayuda a los lectores a comprender información clave de manera rápida y efectiva. Asimismo, el *storytelling* basado en datos se vuelve mucho más convincente cuando se apoya en visualizaciones claras, reforzando los argumentos y haciendo más efectiva la comunicación de ideas o hallazgos.
+
+Estas habilidades que engloban la visualización de datos forma parte de una competencia más amplia denominada **alfabetización de datos** (en inglés *data literacy*). Esta se refiere a la habilidad de leer, interpretar, analizar y utilizar datos de manera efectiva. Esta competencia es crucial para tomar decisiones informadas y evaluar la veracidad y relevancia de la información presentada. La alfabetización de datos permite a las personas no solo comprender las cifras y estadísticas, sino también cuestionar la calidad de los datos, reconocer patrones y sacar conclusiones basadas en la evidencia.
+
+Entre las competencias transversales del siglo XXI destacan la comunicación y el pensamiento crítico. Hemos visto que la visualización de datos abarca ambas habilidades. Por un lado, permite transmitir historias complejas de manera clara y convincente mediante un formato que el público pueda asimilar rápidamente. Por otro lado, como comentaba Tukey en la cita inicial, es posible extraer información que de otro modo permanece oculta. Los profesionales de la comunicación mejoran su habilidad para conectar con el público y ganan credibilidad cuando incorporan técnicas de visualización de datos a sus herramientas y, de manera general, fortalecen su alfabetización en datos.

@@ -1,0 +1,17 @@
+# ¡Hola! {.unnumbered}
+
+ESTE SITIO WEB recoge las **notas de clase sobre visualización de datos** de la asignatura **Periodismo de datos** perteneciente al master universitario en [Periodismo digital y nuevos perfiles profesionales](https://www.urjc.es/master/3023-periodismo-digital-y-nuevos-perfiles-profesionales).
+
+Si estás iniciándote en este arte de la visualización de datos creo que este sitio puede ser un buen punto de partida. Aprenderás las nociones básicas para generar gráficas sencilla pero con un lenguaje visual cercano al entorno profesional.
+
+Si te consideras un *amateur* de la visualización de datos seguro que encontrarás algún consejo o punto de vista que se te pasó por alto. Puede ser un buen sitio para interiorizar buenas prácticas que no te habían explicado antes.
+
+Si te dedicas profesionalmente a la visualización de datos, estaré encantado de recibir comentarios, sugerencias, correciones... cualquier aportación que consideres pertinente para mejorar este sitio web.
+
+## Licencia {.unnumbered}
+
+Este sitio web, y cualquier versión del mismo que puedas encontrarte en otros formatos, es gratuito y se licencia bajo los términos y condiciones de [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/es/deed.es). Puedes descargarte, compartir y adaptar los materiales de este sitio web o de la versión en PDF siempre que mantengas la atribución al autor y los distribuyas con la misma licencia.
+
+## Agradecimientos {.unnumbered}
+
+En la redacción de estos apuntes me he apoyado en herramientas como [ChatGPT](https://chatgpt.com/), [Deepl](https://www.deepl.com) y correctores ortográficos.
