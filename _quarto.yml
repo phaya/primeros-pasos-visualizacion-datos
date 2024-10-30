@@ -6,7 +6,10 @@ language: _language-es.yml
 
 book:
   title: "Primeros pasos en visualización de datos"
+  subtitle: "Versión borrador"
   author: "Pablo A Haya Coll"
+  date: "2024-10-30"
+  date-format: "YYYY-MM-DD"
   
   page-footer:
     left: |
