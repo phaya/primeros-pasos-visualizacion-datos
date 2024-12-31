@@ -45,7 +45,7 @@ grafica_ajustada <- ggplot(data, aes(x = categorias, y = valores)) +
 grid.arrange(grafica_inadecuada, grafica_ajustada, ncol = 2)
 ```
 
-Es muy recomendable que el rango de **los ejes en una gráfica de barras comiencen en cero** ya que las barras deben preservan una proporcionalidad visual entre la longitud y la cantidad que representan. Un principio elemental es que si tus números están representados por la longitud o altura de objetos ---barras, en este caso--- la longitud o altura debe ser proporcional a esos números [@cairo2019charts]. En caso contrario, puede exagerarse las diferencias entre las magnitudes representadas, de manera que una pequeña diferencia se puede interpretar mucho más grande, como es el caso de la [Figura @fig-ejes-comenzar-cero].
+Es muy recomendable que el rango de **los ejes en una gráfica de barras comiencen en cero** ya que las barras deben preservan una proporcionalidad visual entre la longitud y la cantidad que representan. Un principio elemental es que si tus números están representados por la longitud o altura de objetos ---barras, en este caso--- la longitud o altura debe ser proporcional a esos números [@cairo2019charts]. En caso contrario, puede exagerarse las diferencias entre las magnitudes representadas, de manera que una pequeña diferencia se puede interpretar mucho más grande, como es el caso de la [Figura @fig-ejes-comenzar-cero]. Este error es uno de los más comunes en gráficos de barras en artículos científicos [@lin2024quantifying].
 
 Si fuera necesario que el eje no comenzará en el cero debe indicarse claramente en el gráfico. Otra opción es mostrar la diferencia respecto a un valor de referencia.
 
