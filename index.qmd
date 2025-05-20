@@ -14,4 +14,4 @@ Este sitio web, y cualquier versión del mismo que puedas encontrarte en otros f
 
 ## Agradecimientos {.unnumbered}
 
-En la redacción de estos apuntes me he apoyado en herramientas como [ChatGPT](https://chatgpt.com/), [Deepl](https://www.deepl.com) y correctores ortográficos.
+En la redacción de estos apuntes me he apoyado en herramientas como [ChatGPT](https://chatgpt.com/), [Deepl](https://www.deepl.com), [Ideogram](https://ideogram.ai), [Removebg](https://www.remove.bg/) y correctores ortográficos.
